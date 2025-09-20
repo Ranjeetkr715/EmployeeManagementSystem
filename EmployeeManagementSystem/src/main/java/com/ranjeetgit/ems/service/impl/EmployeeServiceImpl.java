@@ -11,6 +11,8 @@ import com.ranjeetgit.ems.repository.EmployeeRepository;
 import com.ranjeetgit.ems.service.EmployeeService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -34,6 +36,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    @CacheEvict(value = {"employees", "employee"}, allEntries = true)
     public EmployeeDTO createEmployee(EmployeeCreateRequest employeeCreateRequest) {
         Employee employee = employeeMapper.mapEmployeeRequestToEntity(employeeCreateRequest);
         Optional<Department> department = departmentRepository.findById(employee.getDepartment().getId());
@@ -47,6 +50,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    @Cacheable(value = "employees",key = "#pageRequest.pageNumber + '-' + #pageRequest.pageSize + '-' + #search")
     public List<EmployeeDTO> getAllEmployee(PageRequest pageRequest,String search) {
         Page<Employee> employees;
         if(search==null){
@@ -57,7 +61,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employees.stream().map(a -> employeeMapper.mapToDTO(a)).toList();
     }
 
-
+    @Cacheable(value = "employee",key = "#id")
     public EmployeeDTO getEmployeeById(int id){
         Employee employee = employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException("Employee not found based on the given input id :- " + id));
         EmployeeDTO employeeDTO = employeeMapper.mapToDTO(employee);
