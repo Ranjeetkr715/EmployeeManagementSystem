@@ -3,6 +3,7 @@ package com.ranjeetgit.ems.service.impl;
 import com.ranjeetgit.ems.dto.DepartmentCreateRequest;
 import com.ranjeetgit.ems.dto.DepartmentDTO;
 import com.ranjeetgit.ems.entities.Department;
+import com.ranjeetgit.ems.exception.DepartmentNotFoundException;
 import com.ranjeetgit.ems.mapper.DepartmentMapper;
 import com.ranjeetgit.ems.repository.DepartmentRepository;
 import com.ranjeetgit.ems.service.DepartmentService;
@@ -37,7 +38,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 //    }
 
     public DepartmentDTO getDepartmentById(int id){
-        Department department = departmentRepository.findById(id).orElseThrow(() -> new RuntimeException("Department not found based on the given input"));
+        Department department = departmentRepository.findById(id).orElseThrow(() -> new DepartmentNotFoundException("Department not found based on the given input id : " + id));
         DepartmentDTO departmentDTO = departmentMapper.mapToDTO(department);
         return departmentDTO;
     }
