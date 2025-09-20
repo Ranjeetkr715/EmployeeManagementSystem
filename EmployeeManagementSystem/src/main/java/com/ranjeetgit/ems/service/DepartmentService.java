@@ -13,7 +13,7 @@ public interface DepartmentService {
 
     public DepartmentDTO createDepartment(DepartmentCreateRequest departmentCreateRequest);
 
-//    public List<EmployeeDTO> getAllDepartment();
+    public List<DepartmentDTO> getAllDepartment();
 
     public DepartmentDTO getDepartmentById(int id);
 }

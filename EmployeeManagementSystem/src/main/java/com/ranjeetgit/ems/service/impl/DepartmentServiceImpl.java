@@ -11,6 +11,10 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
 
@@ -32,10 +36,10 @@ public class DepartmentServiceImpl implements DepartmentService {
         return departmentDTO;
     }
 
-//    @Override
-//    public List<EmployeeDTO> getAllDepartment() {
-//        return departmentRepository.findAll();
-//    }
+    @Override
+    public List<DepartmentDTO> getAllDepartment() {
+        return departmentRepository.findAll().stream().map(departmentMapper ::mapToDTO).toList();
+    }
 
     public DepartmentDTO getDepartmentById(int id){
         Department department = departmentRepository.findById(id).orElseThrow(() -> new DepartmentNotFoundException("Department not found based on the given input id : " + id));

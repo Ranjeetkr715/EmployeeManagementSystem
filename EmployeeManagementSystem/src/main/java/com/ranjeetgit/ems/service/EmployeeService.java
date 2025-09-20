@@ -10,7 +10,7 @@ public interface EmployeeService {
 
     public EmployeeDTO createEmployee(EmployeeCreateRequest employeeCreateRequest);
 
-//    public List<EmployeeDTO> getAllEmployee();
+    public List<EmployeeDTO> getAllEmployee();
 
     public EmployeeDTO getEmployeeById(int id);
 }

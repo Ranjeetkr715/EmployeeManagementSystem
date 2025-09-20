@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("v1/ems/department")
 public class DepartmentController {
@@ -24,9 +26,13 @@ public class DepartmentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DepartmentDTO> getEmployee(@PathVariable int id) {
+    public ResponseEntity<DepartmentDTO> getEmployeeById(@PathVariable int id) {
         return ResponseEntity.ok(departmentService.getDepartmentById(id));
     }
 
+    @GetMapping
+    public ResponseEntity<List<DepartmentDTO>> getAllEmployees(){
+        return ResponseEntity.ok(departmentService.getAllDepartment());
+    }
 
 }

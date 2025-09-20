@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("v1/ems/employee")
 public class EmployeeController {
@@ -42,6 +44,12 @@ public class EmployeeController {
 //        );
 //        return ResponseEntity.ok(result);
 //    }
+
+
+    @GetMapping
+    public ResponseEntity<List<EmployeeDTO>> getAllEmployee(){
+        return ResponseEntity.ok(employeeService.getAllEmployee());
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<EmployeeDTO> getEmployee(@PathVariable int id) {

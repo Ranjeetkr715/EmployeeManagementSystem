@@ -12,6 +12,7 @@ import com.ranjeetgit.ems.service.EmployeeService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,10 +44,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeDTO;
     }
 
-//    @Override
-//    public List<EmployeeDTO> getAllEmployee() {
-//        return employeeRepository.findAll();
-//    }
+    @Override
+    public List<EmployeeDTO> getAllEmployee() {
+        return employeeRepository.findAll().stream().map(a -> employeeMapper.mapToDTO(a)).toList();
+    }
 
 
     public EmployeeDTO getEmployeeById(int id){
@@ -54,6 +55,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         EmployeeDTO employeeDTO = employeeMapper.mapToDTO(employee);
         return employeeDTO;
     }
+
 
 
 }
