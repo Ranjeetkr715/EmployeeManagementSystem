@@ -5,10 +5,11 @@ import com.ranjeetgit.ems.dto.EmployeeDTO;
 import com.ranjeetgit.ems.service.impl.EmployeeServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -25,30 +26,18 @@ public class EmployeeController {
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-    // ✅ 1. Get employees with pagination + sorting + filtering
-//    @GetMapping
-//    public ResponseEntity<EmployeeDTO> getEmployees(
-//            @RequestParam(defaultValue = "0") int page,
-//            @RequestParam(defaultValue = "10") int size,
-//            @RequestParam(defaultValue = "id") String sortBy,
-//            @RequestParam(defaultValue = "asc") String sortDir,
-//            @RequestParam(required = false) Long departmentId,
-//            @RequestParam(required = false) String status,
-//            @RequestParam(required = false) Double minSalary,
-//            @RequestParam(required = false) Double maxSalary,
-//            @RequestParam(required = false) String keyword
-//    ) {
-//        Page<EmployeeDTO> result = employeeService.searchEmployees(
-//                page, size, sortBy, sortDir,
-//                departmentId, status, minSalary, maxSalary, keyword
-//        );
-//        return ResponseEntity.ok(result);
-//    }
-
+    //offset = (pageNo-1) * pageSize  ==> 0,5,10,15
 
     @GetMapping
-    public ResponseEntity<List<EmployeeDTO>> getAllEmployee(){
-        return ResponseEntity.ok(employeeService.getAllEmployee());
+    public ResponseEntity<List<EmployeeDTO>> getAllEmployee(@RequestParam(required = false,defaultValue = "1") int pageNo,
+                                                            @RequestParam(required = false,defaultValue = "3") int pageSize,
+                                                            @RequestParam(required = false,defaultValue = "id") String sortBy ,
+                                                            @RequestParam(defaultValue = "asc") String sortDir,
+                                                            @RequestParam String search
+                                                            ){
+        Sort sort= sortDir.equalsIgnoreCase("ASC") ? Sort.by(sortBy).ascending():Sort.by(sortBy).descending();
+        PageRequest pageRequest = PageRequest.of(pageNo-1, pageSize,sort);
+        return ResponseEntity.ok(employeeService.getAllEmployee(pageRequest,search));
     }
 
     @GetMapping("/{id}")

@@ -11,6 +11,8 @@ import com.ranjeetgit.ems.repository.EmployeeRepository;
 import com.ranjeetgit.ems.service.EmployeeService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -45,8 +47,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<EmployeeDTO> getAllEmployee() {
-        return employeeRepository.findAll().stream().map(a -> employeeMapper.mapToDTO(a)).toList();
+    public List<EmployeeDTO> getAllEmployee(PageRequest pageRequest,String search) {
+        Page<Employee> employees;
+        if(search==null){
+            employees = employeeRepository.findAll(pageRequest);
+        }else {
+            employees = employeeRepository.findByNameContainingIgnoreCase(pageRequest,search);
+        }
+        return employees.stream().map(a -> employeeMapper.mapToDTO(a)).toList();
     }
 
 
