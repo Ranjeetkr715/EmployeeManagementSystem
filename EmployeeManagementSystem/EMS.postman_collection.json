@@ -1,0 +1,180 @@
+{
+	"info": {
+		"_postman_id": "74f22829-7f1d-4973-a7bc-dd2095118f77",
+		"name": "EMS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38967279"
+	},
+	"item": [
+		{
+			"name": "createEmployee",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Ranjeet Kumar\",\n  \"email\": \"ranjeet.kumar@example12.com\",\n  \"phone\": \"9876543210\",\n  \"salary\": 85000,\n  \"joinDate\": \"2025-09-18\",\n  \"status\": \"ACTIVE\",\n  \"departmentId\": 2\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/v1/ems/employee/create",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"v1",
+						"ems",
+						"employee",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createDepartment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"ITT\",\n    \"location\": \"Dhanbad123\",\n    \"employees\": [\n        {\n            \"name\": \"Ranjeet Kumar\",\n            \"email\": \"ranjeet.kumar@example12.com\",\n            \"phone\": \"9876543210\",\n            \"salary\": 851000,\n            \"joinDate\": \"2025-09-18\",\n            \"status\": \"ACTIVE\",\n            \"departmentId\": 2\n        },\n        {\n            \"name\": \"Rahul Singh\",\n            \"email\": \"rahul@example.com\",\n            \"phone\": \"9876500000\",\n            \"salary\": 610000,\n            \"status\": \"ACTIVE\",\n            \"departmentId\": 2\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/v1/ems/department/create",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"v1",
+						"ems",
+						"department",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetEmployeeByID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/v1/ems/employee/2",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"v1",
+						"ems",
+						"employee",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetEmployees",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/v1/ems/employee?search=Kumar",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"v1",
+						"ems",
+						"employee"
+					],
+					"query": [
+						{
+							"key": "pageNo",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "pageSize",
+							"value": "3",
+							"disabled": true
+						},
+						{
+							"key": "sortBy",
+							"value": "name",
+							"disabled": true
+						},
+						{
+							"key": "sortDir",
+							"value": "Desc",
+							"disabled": true
+						},
+						{
+							"key": "search",
+							"value": "Kumar"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDepartmentByID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/v1/ems/department/1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"v1",
+						"ems",
+						"department",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDepartment",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/v1/ems/department/1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"v1",
+						"ems",
+						"department",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
